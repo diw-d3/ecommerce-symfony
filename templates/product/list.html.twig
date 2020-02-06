@@ -90,7 +90,7 @@
                                     <p class="card-text">{{ product.description | slice(0, 50) }}...</p>
                                     <div class="row">
                                         <div class="col">
-                                            <p class="btn btn-danger btn-block">{{ (product.price / 100) | number_format(2, ',', ' ') }} &euro;</p>
+                                            <p class="btn btn-danger btn-block">{{ ((product.price - product.price * product.discount / 100) / 100) | number_format(2, ',', '') }} &euro;</p>
                                         </div>
                                         <div class="col">
                                             <a href="#" class="btn btn-success btn-block">Ajouter au panier</a>

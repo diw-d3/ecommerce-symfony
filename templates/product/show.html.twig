@@ -14,8 +14,8 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
-                        <li class="breadcrumb-item"><a href="">Catégorie</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Produit</li>
+                        <li class="breadcrumb-item"><a href="{{ path('category_show', {slug: product.category.slug}) }}">{{ product.category.name }}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
                     </ol>
                 </nav>
             </div>
@@ -40,16 +40,18 @@
             <div class="col-12 col-lg-6 add_to_cart_block">
                 <div class="card bg-light mb-3">
                     <div class="card-body">
-                        <p class="price">99.00 &euro;</p>
-                        <p class="price_discounted">149.90 &euro;</p>
+                        <p class="price">{{ ((product.price - product.price * product.discount / 100) / 100) | number_format(2, ',', '') }} &euro;</p>
+                        {% if product.discount > 0 %}
+                        <p class="price_discounted">{{ product.price / 100 }} &euro;</p>
+                        {% endif %}
                         <form method="get" action="cart.html">
                             <div class="form-group">
                                 <label for="colors">Couleur</label>
                                 <select class="custom-select" id="colors">
                                     <option selected>Choisir</option>
-                                    <option value="1">Bleu</option>
-                                    <option value="2">Rouge</option>
-                                    <option value="3">Vert</option>
+                                    {% for color in product.colors %}
+                                        <option value="{{ color }}">{{ color }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="form-group">
