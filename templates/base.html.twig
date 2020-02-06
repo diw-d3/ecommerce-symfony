@@ -10,7 +10,7 @@
             <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
             <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
             <link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600" rel="stylesheet" type="text/css">
-            <link href="css/style.css" rel="stylesheet" type="text/css">
+            <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
         {% endblock %}
     </head>
     <body>
@@ -36,9 +36,9 @@
 
                     <form class="form-inline my-2 my-lg-0">
                         <div class="input-group input-group-sm">
-                            <input type="text" class="form-control" placeholder="Recherche...">
+                            <input type="text" name="search" class="form-control" placeholder="Recherche...">
                             <div class="input-group-append">
-                                <button type="button" class="btn btn-secondary btn-number">
+                                <button class="btn btn-secondary btn-number">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </div>

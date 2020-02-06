@@ -79,7 +79,7 @@
                             <div class="card">
                                 <img class="card-img-top" src="https://dummyimage.com/600x400/55595c/fff" alt="Card image cap">
                                 <div class="card-body">
-                                    <h4 class="card-title"><a href="" title="View Product">{{ product.name }}</a></h4>
+                                    <h4 class="card-title"><a href="{{ path('product_show', {slug: product.slug}) }}" title="View Product">{{ product.name }}</a></h4>
                                     <p class="card-text">{{ product.description | slice(0, 50) }}...</p>
                                     <div class="row">
                                         <div class="col">
