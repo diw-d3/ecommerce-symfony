@@ -12,6 +12,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,10 +22,12 @@ class ProductController extends AbstractController
     /**
      * @Route("/product", name="product_list")
      */
-    public function list(ProductRepository $productRepository)
+    public function list(ProductRepository $productRepository, CategoryRepository $categoryRepository)
     {
         return $this->render('product/list.html.twig', [
             'products' => $productRepository->findAll(),
+            'categories' => $categoryRepository->findAll(),
+            'current_category' => null,
         ]);
     }
 

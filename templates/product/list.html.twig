@@ -3,7 +3,9 @@
 {% block body %}
     <section class="jumbotron text-center">
         <div class="container">
-            <h1 class="jumbotron-heading">Produits</h1>
+            <h1 class="jumbotron-heading">
+                {{ current_category ? current_category.name : 'Produits' }}
+            </h1>
             <p class="lead text-muted mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, veniam, eius aliquam quidem rem sunt nam quaerat facilis ex error placeat ipsa illo sed inventore soluta ipsum cumque atque ea?</p>
         </div>
     </section>
@@ -14,7 +16,12 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Produits</li>
+                        {% if current_category %}
+                            <li class="breadcrumb-item"><a href="{{ path('product_list') }}">Produits</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ current_category.name }}</li>
+                        {% else %}
+                            <li class="breadcrumb-item active" aria-current="page">Produits</li>
+                        {% endif %}
                     </ol>
                 </nav>
             </div>
@@ -55,11 +62,11 @@
                 <div class="card bg-light mb-3">
                     <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-list"></i> Catégories</div>
                     <ul class="list-group category_block">
-                        <li class="list-group-item"><a href="">Cras justo odio</a></li>
-                        <li class="list-group-item"><a href="">Dapibus ac facilisis in</a></li>
-                        <li class="list-group-item"><a href="">Morbi leo risus</a></li>
-                        <li class="list-group-item"><a href="">Porta ac consectetur ac</a></li>
-                        <li class="list-group-item"><a href="">Vestibulum at eros</a></li>
+                        {% for category in categories %}
+                            <li class="list-group-item {% if current_category == category %}active{% endif %}">
+                                <a href="{{ path('category_show', {slug: category.slug}) }}">{{ category.name }}</a>
+                            </li>
+                        {% endfor %}
                     </ul>
                 </div>
                 <div class="card bg-light mb-3">

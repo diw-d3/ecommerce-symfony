@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Category;
 use App\Entity\Product;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -12,8 +13,17 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
-        $colors = ['Bleu', 'Rouge', 'Vert'];
 
+        $categories = [];
+        for ($i = 0; $i < 5; ++$i) {
+            $category = new Category();
+            $category->setName('Catégorie '.$i);
+            $category->setSlug('categorie-'.$i);
+            $manager->persist($category);
+            $categories[] = $category;
+        }
+
+        $colors = ['Bleu', 'Rouge', 'Vert'];
         for ($i = 0; $i < 100; ++$i) {
             $product = new Product();
             $product->setName('Produit '.$i);
@@ -25,6 +35,7 @@ class AppFixtures extends Fixture
             $product->setColors($faker->randomElements($colors, rand(0, count($colors))));
             $product->setImage(null);
             $product->setDiscount($faker->numberBetween(0, 90));
+            $product->setCategory($faker->randomElement($categories));
             $manager->persist($product);
         }
 
