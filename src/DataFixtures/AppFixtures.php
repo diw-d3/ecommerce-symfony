@@ -19,7 +19,7 @@ class AppFixtures extends Fixture
             $product->setName('Produit '.$i);
             $product->setSlug('produit-'.$i);
             $product->setDescription($faker->text);
-            $product->setPrice($faker->numberBetween(99, 9999) * 100);
+            $product->setPrice($faker->numberBetween(9900, 999900));
             $product->setCreatedAt($faker->dateTimeBetween('-30 days'));
             $product->setIsHeartStroke($faker->boolean);
             $product->setColors($faker->randomElements($colors, rand(0, count($colors))));
