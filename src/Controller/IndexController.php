@@ -14,4 +14,12 @@ class IndexController extends AbstractController
     {
         return $this->render('index/home.html.twig');
     }
+
+    /**
+     * @Route("/contact", name="contact")
+     */
+    public function contact()
+    {
+        return $this->render('index/contact.html.twig');
+    }
 }
