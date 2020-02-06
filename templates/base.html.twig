@@ -14,6 +14,7 @@
         {% endblock %}
     </head>
     <body>
+        {% block wrapper %}
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="{{ path('homepage') }}">Ecommerce</a>
@@ -115,6 +116,7 @@
                 </div>
             </div>
         </footer>
+        {% endblock %}
 
         {% block javascripts %}
             <!-- JS -->

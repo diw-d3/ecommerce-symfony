@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block wrapper %}
+    <div class="d-flex admin">
+        <div class="admin-navbar bg-dark py-4">
+            <ul class="list-unstyled">
+                <li class="px-4 py-2">
+                    <a href="{{ path('product_new') }}">
+                        <i class="fa fa-tag"></i> Produits
+                    </a>
+                </li>
+                <li class="px-4 py-2">
+                    <a href="{{ path('homepage') }}">
+                        <i class="fa fa-home"></i> Retour au site
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="container-fluid px-5">
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}
