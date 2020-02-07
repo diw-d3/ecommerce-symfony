@@ -27,7 +27,7 @@
                 <td>{{ product.id }}</td>
                 <td>{{ product.name }}</td>
                 <td>{{ (product.price / 100) | number_format(2, ',', '') }} &euro;</td>
-                <td>{{ product.image }}</td>
+                <td><img class="img-fluid" width="75" src="{{ asset('uploads/' ~ product.image) }}" /></td>
                 <td>- {{ product.discount }}%</td>
                 <td>
                     <a href="{{ path('admin_product_show', {id: product.id}) }}">

@@ -29,7 +29,9 @@
                 <div class="card bg-light mb-3">
                     <div class="card-body">
                         <a href="" data-toggle="modal" data-target="#productModal">
-                            <img class="img-fluid" src="https://dummyimage.com/800x800/55595c/fff" />
+                            <div class="text-center">
+                                <img class="img-fluid" src="{{ asset('uploads/' ~ product.image) }}" />
+                            </div>
                             <p class="text-center">Zoom</p>
                         </a>
                     </div>
@@ -188,7 +190,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <img class="img-fluid" src="https://dummyimage.com/1200x1200/55595c/fff" />
+                    <div class="text-center">
+                        <img class="img-fluid" src="{{ asset('uploads/' ~ product.image) }}" />
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
