@@ -28,6 +28,7 @@ class ProductController extends AbstractController
             'products' => $productRepository->findAll(),
             'categories' => $categoryRepository->findAll(),
             'current_category' => null,
+            'last_product' => $productRepository->findLastProducts(1),
         ]);
     }
 

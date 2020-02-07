@@ -69,15 +69,17 @@
                         {% endfor %}
                     </ul>
                 </div>
-                <div class="card bg-light mb-3">
-                    <div class="card-header bg-success text-white text-uppercase">Dernier produit</div>
-                    <div class="card-body">
-                        <img class="img-fluid" src="https://dummyimage.com/600x400/55595c/fff" />
-                        <h5 class="card-title mt-3">Produit</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                        <p class="bloc_left_price">99.00 &euro;</p>
+                {% if last_product %}
+                    <div class="card bg-light mb-3">
+                        <div class="card-header bg-success text-white text-uppercase">Dernier produit</div>
+                        <div class="card-body">
+                            <img class="img-fluid" src="{{ asset('uploads/' ~ last_product.image) }}" />
+                            <h5 class="card-title mt-3">{{ last_product.name }}</h5>
+                            <p class="card-text">{{ last_product.description | slice(0, 50) }}...</p>
+                            <p class="bloc_left_price">{{ ((last_product.price - last_product.price * last_product.discount / 100) / 100) | number_format(2, ',', '') }} &euro;</p>
+                        </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
             <div class="col">
                 <div class="row">

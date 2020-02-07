@@ -45,13 +45,24 @@ class ProductRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function findLastProducts()
+    public function findLastProducts($number, $category = null)
     {
-        return $this->createQueryBuilder('p')
-            ->setMaxResults(4)
-            ->orderBy('p.createdAt', 'DESC')
-            ->getQuery()
-            ->getResult();
+        $query = $this->createQueryBuilder('p')
+            ->setMaxResults($number)
+            ->orderBy('p.createdAt', 'DESC');
+
+        if (null !== $category) {
+            $query->andWhere('p.category= :category')
+                ->setParameter('category', $category);
+        }
+
+        $qb = $query->getQuery();
+
+        if ($number > 1) {
+            return $qb->getResult();
+        }
+
+        return $qb->getOneOrNullResult();
     }
 
     // /**

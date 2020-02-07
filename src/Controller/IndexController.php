@@ -15,7 +15,7 @@ class IndexController extends AbstractController
     {
         $randomProducts = $productRepository->findRandom(4);
         $heartStrokeProduct = $productRepository->findOneHeartStroke();
-        $lastProducts = $productRepository->findLastProducts();
+        $lastProducts = $productRepository->findLastProducts(4);
 
         return $this->render('index/home.html.twig', [
             'random_products' => $randomProducts,
