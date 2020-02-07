@@ -12,9 +12,13 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Entity\Review;
+use App\Form\ReviewType;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
@@ -35,7 +39,7 @@ class ProductController extends AbstractController
     /**
      * @Route("/product/{slug}", name="product_show")
      */
-    public function show(Product $product)
+    public function show(Request $request, Product $product, EntityManagerInterface $entityManager)
     {
         $sum = 0;
 
@@ -45,9 +49,24 @@ class ProductController extends AbstractController
 
         $average = $sum / $product->getReviews()->count();
 
+        $review = new Review();
+        $reviewForm = $this->createForm(ReviewType::class, $review);
+        $reviewForm->handleRequest($request);
+
+        if ($reviewForm->isSubmitted() && $reviewForm->isValid()) {
+            $review->setCreatedAt(new \DateTime());
+            $review->setProduct($product);
+
+            $entityManager->persist($review);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('product_show', ['slug' => $product->getSlug()]);
+        }
+
         return $this->render('product/show.html.twig', [
             'product' => $product,
             'average' => floor($average * 2) / 2,
+            'review_form' => $reviewForm->createView(),
         ]);
     }
 }

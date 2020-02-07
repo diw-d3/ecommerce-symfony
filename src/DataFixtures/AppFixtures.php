@@ -60,7 +60,7 @@ class AppFixtures extends Fixture
             $products[] = $product;
         }
 
-        for ($i = 0; $i < 100; ++$i) {
+        for ($i = 0; $i < 20; ++$i) {
             $review = new Review();
             $review->setName($faker->name);
             $review->setNote($faker->numberBetween(0, 5));
