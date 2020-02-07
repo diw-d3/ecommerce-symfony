@@ -1,0 +1,63 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ product.name }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="d-flex align-items-center justify-content-between my-5">
+        <h1>{{ product.name }}</h1>
+        <div>
+            <a href="{{ path('admin_product_index') }}">
+                <i class="fa fa-arrow-left"></i>
+            </a>
+            <a href="{{ path('admin_product_edit', {'id': product.id}) }}">
+                <i class="fa fa-pencil"></i>
+            </a>
+            {{ include('admin/product/_delete_form.html.twig') }}
+        </div>
+    </div>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>ID</th>
+                <td>{{ product.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ product.name }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ product.slug }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ product.description }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ (product.price / 100) | number_format(2, ',', '') }} &euro;</td>
+            </tr>
+            <tr>
+                <th>Date de création</th>
+                <td>{{ product.createdAt ? product.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Coup de coeur ?</th>
+                <td>{{ product.isHeartStroke ? 'Oui' : 'Non' }}</td>
+            </tr>
+            <tr>
+                <th>Couleurs</th>
+                <td>{{ product.colors | join(', ') }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ product.image }}</td>
+            </tr>
+            <tr>
+                <th>Promotion</th>
+                <td>- {{ product.discount }}%</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

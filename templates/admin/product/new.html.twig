@@ -1,0 +1,16 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Nouveau produit - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="d-flex align-items-center justify-content-between my-5">
+        <h1>Créer un nouveau produit</h1>
+        <div>
+            <a href="{{ path('admin_product_index') }}">
+                <i class="fa fa-arrow-left"></i>
+            </a>
+        </div>
+    </div>
+
+    {{ include('admin/product/_form.html.twig') }}
+{% endblock %}

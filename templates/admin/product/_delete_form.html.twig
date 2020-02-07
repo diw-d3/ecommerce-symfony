@@ -1,0 +1,7 @@
+<form class="d-inline-block" method="post" action="{{ path('admin_product_delete', {'id': product.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
+    <button class="btn btn-link p-0">
+        <i class="fa fa-trash"></i>
+    </button>
+</form>

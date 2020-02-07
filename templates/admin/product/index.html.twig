@@ -1,0 +1,49 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Nos produits - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="d-flex align-items-center justify-content-between my-5">
+        <h1>Nos produits</h1>
+        <div>
+            <a href="{{ path('admin_product_new') }}" class="btn btn-primary">Créer un produit</a>
+        </div>
+    </div>
+
+    <table class="table table-stripped">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Image</th>
+                <th>Promotion</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ (product.price / 100) | number_format(2, ',', '') }} &euro;</td>
+                <td>{{ product.image }}</td>
+                <td>- {{ product.discount }}%</td>
+                <td>
+                    <a href="{{ path('admin_product_show', {id: product.id}) }}">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                    <a href="{{ path('admin_product_edit', {id: product.id}) }}">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    {{ include('admin/product/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Pas de produits</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
