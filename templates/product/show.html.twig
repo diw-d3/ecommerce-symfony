@@ -84,13 +84,11 @@
                             </ul>
                         </div>
                         <div class="reviews_product p-3 mb-2 ">
-                            3 avis
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            (4/5)
+                            {{ product.reviews | length }} avis
+                            {% for note in 1..5 %}
+                                <i class="fa fa-star{{ average - note + 1 == 0.5 ? '-half' }}{{ average < note ? '-o' }}"></i>
+                            {% endfor %}
+                            ({{ average }}/5)
                             <a class="pull-right" href="#reviews">Voir tous les avis</a>
                         </div>
                         <div class="datasheet p-3 mb-2 bg-info text-white">
@@ -119,36 +117,21 @@
                 <div class="card border-light mb-3">
                     <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-comment"></i> Avis</div>
                     <div class="card-body">
+                        {% for review in product.reviews %}
                         <div class="review">
                             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                            <meta itemprop="datePublished" content="01-01-2016">28 mars 2019
+                            <meta itemprop="datePublished" content="{{ review.createdAt | date('d-m-Y') }}">{{ review.createdAt | date('d m Y') }}
 
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            par Paul Smith
+                            {% for note in 1..5 %}
+                                <span class="fa fa-star{{ review.note < note ? '-o' }}"></span>
+                            {% endfor %}
+                            par {{ review.name }}
                             <p class="blockquote">
-                            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                <p class="mb-0">{{ review.message }}</p>
                             </p>
                             <hr>
                         </div>
-                        <div class="review">
-                            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                            <meta itemprop="datePublished" content="01-01-2016">29 mars 2019
-
-                            <span class="fa fa-star" aria-hidden="true"></span>
-                            <span class="fa fa-star" aria-hidden="true"></span>
-                            <span class="fa fa-star" aria-hidden="true"></span>
-                            <span class="fa fa-star" aria-hidden="true"></span>
-                            <span class="fa fa-star" aria-hidden="true"></span>
-                            par Paul Smith
-                            <p class="blockquote">
-                            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                            </p>
-                            <hr>
-                        </div>
+                        {% endfor %}
 
                         <form action="" method="post">
                             <div class="form-group">

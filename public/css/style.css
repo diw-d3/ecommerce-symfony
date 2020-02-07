@@ -50,7 +50,7 @@
     color: #343a40;
 }
 
-.reviews_product .fa-star {
+.reviews_product .fa-star, .reviews_product .fa-star-o, .reviews_product .fa-star-half, .reviews_product .fa-star-half-o {
     color: gold;
 }
 

@@ -37,8 +37,17 @@ class ProductController extends AbstractController
      */
     public function show(Product $product)
     {
+        $sum = 0;
+
+        foreach ($product->getReviews() as $review) {
+            $sum += $review->getNote();
+        }
+
+        $average = $sum / $product->getReviews()->count();
+
         return $this->render('product/show.html.twig', [
             'product' => $product,
+            'average' => floor($average * 2) / 2,
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Entity\Review;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
@@ -39,6 +40,7 @@ class AppFixtures extends Fixture
             $categories[] = $category;
         }
 
+        $products = [];
         $colors = ['Bleu', 'Rouge', 'Vert'];
         for ($i = 0; $i < 10; ++$i) {
             $product = new Product();
@@ -55,6 +57,17 @@ class AppFixtures extends Fixture
             $product->setDiscount($faker->numberBetween(0, 90));
             $product->setCategory($faker->randomElement($categories));
             $manager->persist($product);
+            $products[] = $product;
+        }
+
+        for ($i = 0; $i < 100; ++$i) {
+            $review = new Review();
+            $review->setName($faker->name);
+            $review->setNote($faker->numberBetween(0, 5));
+            $review->setMessage($faker->text);
+            $review->setCreatedAt($faker->dateTimeBetween('-30 days'));
+            $review->setProduct($faker->randomElement($products));
+            $manager->persist($review);
         }
 
         $manager->flush();
