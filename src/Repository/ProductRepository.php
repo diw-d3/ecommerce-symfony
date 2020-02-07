@@ -19,6 +19,41 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+    public function findRandom($number)
+    {
+        $count = (int) $this->count([]);
+
+        $result = $this->createQueryBuilder('p')
+            ->setMaxResults(4)
+            ->setFirstResult(rand(0, $count - $number))
+            ->getQuery()
+            ->getResult();
+
+        shuffle($result);
+
+        return $result;
+    }
+
+    public function findOneHeartStroke()
+    {
+        $count = (int) $this->count([]);
+
+        return $this->createQueryBuilder('p')
+            ->setMaxResults(1)
+            ->setFirstResult(rand(0, $count - 1))
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findLastProducts()
+    {
+        return $this->createQueryBuilder('p')
+            ->setMaxResults(4)
+            ->orderBy('p.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */
