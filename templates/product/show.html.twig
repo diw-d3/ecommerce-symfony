@@ -85,10 +85,12 @@
                         </div>
                         <div class="reviews_product p-3 mb-2 ">
                             {{ product.reviews | length }} avis
+                            {% if average %}
                             {% for note in 1..5 %}
                                 <i class="fa fa-star{{ average - note + 1 == 0.5 ? '-half' }}{{ average < note ? '-o' }}"></i>
                             {% endfor %}
                             ({{ average }}/5)
+                            {% endif %}
                             <a class="pull-right" href="#reviews">Voir tous les avis</a>
                         </div>
                         <div class="datasheet p-3 mb-2 bg-info text-white">

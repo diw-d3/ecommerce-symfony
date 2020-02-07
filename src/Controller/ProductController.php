@@ -41,13 +41,17 @@ class ProductController extends AbstractController
      */
     public function show(Request $request, Product $product, EntityManagerInterface $entityManager)
     {
-        $sum = 0;
+        $average = null;
+        if ($product->getReviews()->count() > 0) {
+            $sum = 0;
 
-        foreach ($product->getReviews() as $review) {
-            $sum += $review->getNote();
+            foreach ($product->getReviews() as $review) {
+                $sum += $review->getNote();
+            }
+
+            $average = $sum / $product->getReviews()->count();
+            $average = floor($average * 2) / 2;
         }
-
-        $average = $sum / $product->getReviews()->count();
 
         $review = new Review();
         $reviewForm = $this->createForm(ReviewType::class, $review);
@@ -65,7 +69,7 @@ class ProductController extends AbstractController
 
         return $this->render('product/show.html.twig', [
             'product' => $product,
-            'average' => floor($average * 2) / 2,
+            'average' => $average,
             'review_form' => $reviewForm->createView(),
         ]);
     }

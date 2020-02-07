@@ -9,6 +9,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class AppFixtures extends Fixture
@@ -18,11 +19,17 @@ class AppFixtures extends Fixture
      */
     private $client;
 
+    /**
+     * @var SluggerInterface
+     */
+    private $slugger;
+
     private $uploadDir;
 
-    public function __construct(HttpClientInterface $client, $uploadDir)
+    public function __construct(HttpClientInterface $client, SluggerInterface $slugger, $uploadDir)
     {
         $this->client = $client;
+        $this->slugger = $slugger;
         $this->uploadDir = $uploadDir;
     }
 
@@ -45,7 +52,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 10; ++$i) {
             $product = new Product();
             $product->setName('Produit '.$i);
-            $product->setSlug('produit-'.$i);
+            $product->setSlug($this->slugger->slug($product->getName())->lower());
             $product->setDescription($faker->text);
             $product->setPrice($faker->numberBetween(9900, 999900));
             $product->setCreatedAt($faker->dateTimeBetween('-30 days'));

@@ -31,6 +31,8 @@ class IndexController extends AbstractController
      */
     public function contact()
     {
+        // Ici, on peut faire une démo de Messenger ?
+
         return $this->render('index/contact.html.twig');
     }
 }
