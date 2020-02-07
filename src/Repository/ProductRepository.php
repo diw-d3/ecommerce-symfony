@@ -65,6 +65,18 @@ class ProductRepository extends ServiceEntityRepository
         return $qb->getOneOrNullResult();
     }
 
+    public function findBestProducts()
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.reviews', 'r')
+            ->addSelect('r')
+            ->groupBy('p.id')
+            ->orderBy('SUM(r.note)', 'DESC')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */

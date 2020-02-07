@@ -102,23 +102,25 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-3">
-                                <div class="card">
-                                    <img class="card-img-top" src="https://dummyimage.com/600x400/55595c/fff" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title"><a href="product.html" title="View Product">Produit</a></h4>
-                                        <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
-                                        <div class="row">
-                                            <div class="col">
-                                                <p class="btn btn-danger btn-block">99.00 &euro;</p>
-                                            </div>
-                                            <div class="col">
-                                                <a href="cart.html" class="btn btn-success btn-block">Ajouter au panier</a>
+                            {% for best_product in best_products %}
+                                <div class="col-sm-3">
+                                    <div class="card">
+                                        <img class="card-img-top" src="{{ asset('uploads/' ~ best_product.image) }}" alt="{{ best_product.name }}">
+                                        <div class="card-body">
+                                            <h4 class="card-title"><a href="{{ path('product_show', {slug: best_product.slug}) }}" title="View Product">{{ best_product.name }}</a></h4>
+                                            <p class="card-text">{{ best_product.description | slice(0, 50) }}...</p>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <p class="btn btn-danger btn-block">{{ ((best_product.price - best_product.price * best_product.discount / 100) / 100) | number_format(2, ',', '') }} &euro;</p>
+                                                </div>
+                                                <div class="col">
+                                                    <a href="#" class="btn btn-success btn-block">Ajouter au panier</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
