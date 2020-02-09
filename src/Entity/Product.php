@@ -44,7 +44,7 @@ class Product
      * @ORM\Column(type="integer")
      *
      * @Assert\NotBlank()
-     * @Assert\Positive()
+     * @Assert\GreaterThanOrEqual(9900, message="Cette valeur doit être supérieure ou égale à 99.")
      */
     private $price;
 
