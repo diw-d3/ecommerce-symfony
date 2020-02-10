@@ -1,0 +1,10 @@
+easy_admin:
+    site_name: 'Ecommerce'
+    design:
+        brand_color: '#1ABC9C'
+    entities:
+        # List the entity class name you want to manage
+        - App\Entity\Product
+        - App\Entity\Category
+        - App\Entity\User
+        - App\Entity\Review
