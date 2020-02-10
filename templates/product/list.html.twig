@@ -102,23 +102,29 @@
                             </div>
                         </div>
                     {% endfor %}
+                    {% if current_page %}
                     <div class="col-12">
                         <nav aria-label="...">
                             <ul class="pagination">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1">Précédent</a>
+                                <li class="page-item {{ current_page == 1 ? 'disabled' }}">
+                                    <a class="page-link" href="{{ path('product_list', {page: current_page - 1}) }}" tabindex="-1">Précédent</a>
                                 </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Suivant</a>
+
+                                {% for page in 1..max_pages %}
+                                    <li class="page-item {{ page == current_page ? 'active' }}">
+                                        <a class="page-link" href="{{ path('product_list', {page: page}) }}">
+                                            {{ page }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+
+                                <li class="page-item {{ current_page == max_pages ? 'disabled' }}">
+                                    <a class="page-link" href="{{ path('product_list', {page: current_page + 1}) }}">Suivant</a>
                                 </li>
                             </ul>
                         </nav>
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

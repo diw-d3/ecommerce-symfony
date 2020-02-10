@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * @method Product|null find($id, $lockMode = null, $lockVersion = null)
@@ -75,6 +76,19 @@ class ProductRepository extends ServiceEntityRepository
             ->setMaxResults(4)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findAllWithPagination($page)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->innerJoin('p.category', 'c')
+            ->leftJoin('p.reviews', 'r')
+            ->addSelect('c', 'r')
+            ->orderBy('p.id', 'ASC')
+            ->setFirstResult(($page - 1) * 3) // LIMIT 0, 3
+            ->setMaxResults(3);
+
+        return new Paginator($qb);
     }
 
     // /**

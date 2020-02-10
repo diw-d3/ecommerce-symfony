@@ -24,12 +24,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/product", name="product_list")
+     * @Route("/product/{page}", name="product_list", requirements={"page": "\d+"})
      */
-    public function list(ProductRepository $productRepository, CategoryRepository $categoryRepository)
-    {
+    public function list(
+        ProductRepository $productRepository,
+        CategoryRepository $categoryRepository,
+        $page = 1
+    ) {
+        // Get max pages...
+        $maxPages = ceil($productRepository->count([]) / 3);
+
+        if ($page > $maxPages || $page < 1) { // 404 si on dépasse le nombre de pages max
+            throw $this->createNotFoundException();
+        }
+
         return $this->render('product/list.html.twig', [
-            'products' => $productRepository->findAll(),
+            'products' => $productRepository->findAllWithPagination($page),
+            'max_pages' => $maxPages,
+            'current_page' => $page,
             'categories' => $categoryRepository->findAll(),
             'current_category' => null,
             'last_product' => $productRepository->findLastProducts(1),

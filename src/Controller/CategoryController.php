@@ -26,6 +26,8 @@ class CategoryController extends AbstractController
     {
         return $this->render('product/list.html.twig', [
             'products' => $category->getProducts(),
+            'max_pages' => null,
+            'current_page' => null,
             'categories' => $categoryRepository->findAll(),
             'current_category' => $category,
             'last_product' => $productRepository->findLastProducts(1, $category),
