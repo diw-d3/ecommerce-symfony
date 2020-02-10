@@ -43,7 +43,7 @@
                             <td></td>
                             <td></td>
                             <td>Sous-Total</td>
-                            <td class="text-right">255,90 €</td>
+                            <td class="text-right">{{ subtotal | number_format('2', ',', ' ') }} €</td>
                         </tr>
                         <tr>
                             <td></td>
@@ -51,7 +51,7 @@
                             <td></td>
                             <td></td>
                             <td>Frais de port</td>
-                            <td class="text-right">6,90 €</td>
+                            <td class="text-right">{{ delivery | number_format('2', ',', ' ') }} €</td>
                         </tr>
                         <tr>
                             <td></td>
@@ -59,7 +59,7 @@
                             <td></td>
                             <td></td>
                             <td><strong>Total</strong></td>
-                            <td class="text-right"><strong>346,90 €</strong></td>
+                            <td class="text-right"><strong>{{ total | number_format('2', ',', ' ') }} €</strong></td>
                         </tr>
                         </tbody>
                     </table>

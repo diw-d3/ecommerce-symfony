@@ -12,6 +12,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Service\SuperCart;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,16 +22,9 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/add/{id}/{qty}", name="cart_add")
      */
-    public function add(Product $product, SessionInterface $session, $qty = 1)
+    public function add(Product $product, SuperCart $superCart, $qty = 1)
     {
-        $products = $session->get('products', []);
-
-        $products[] = [
-            'quantity' => $qty,
-            'product' => $product,
-        ];
-
-        $session->set('products', $products);
+        $superCart->add($product, $qty);
 
         return $this->redirectToRoute('cart_index');
     }
@@ -57,13 +51,13 @@ class CartController extends AbstractController
     /**
      * @Route("/cart", name="cart_index")
      */
-    public function index(SessionInterface $session)
+    public function index(SuperCart $superCart)
     {
-        $products = $session->get('products', []);
-        // dump($products);
-
         return $this->render('cart/index.html.twig', [
-            'products' => $products,
+            'products' => $superCart->getProducts(),
+            'subtotal' => $superCart->getSubtotal(),
+            'delivery' => 6.90,
+            'total' => $superCart->getTotal(),
         ]);
     }
 }
