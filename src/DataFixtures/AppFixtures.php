@@ -5,10 +5,12 @@ namespace App\DataFixtures;
 use App\Entity\Category;
 use App\Entity\Product;
 use App\Entity\Review;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -26,17 +28,33 @@ class AppFixtures extends Fixture
 
     private $uploadDir;
 
-    public function __construct(HttpClientInterface $client, SluggerInterface $slugger, $uploadDir)
-    {
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $passwordEncoder;
+
+    public function __construct(
+        HttpClientInterface $client,
+        SluggerInterface $slugger,
+        $uploadDir,
+        UserPasswordEncoderInterface $passwordEncoder
+    ) {
         $this->client = $client;
         $this->slugger = $slugger;
         $this->uploadDir = $uploadDir;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
         $fs = new Filesystem();
+
+        $user = new User();
+        $user->setEmail('matthieu@boxydev.com');
+        $user->setPassword($this->passwordEncoder->encodePassword($user, 'test'));
+        $user->setRoles(['ROLE_ADMIN']);
+        $manager->persist($user);
 
         $categories = [];
         for ($i = 0; $i < 5; ++$i) {
