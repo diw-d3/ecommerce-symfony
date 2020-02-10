@@ -27,6 +27,7 @@ class ProductController extends AbstractController
      * @Route("/product/{page}", name="product_list", requirements={"page": "\d+"})
      */
     public function list(
+        Request $request,
         ProductRepository $productRepository,
         CategoryRepository $categoryRepository,
         $page = 1
@@ -34,12 +35,15 @@ class ProductController extends AbstractController
         // Get max pages...
         $maxPages = ceil($productRepository->count([]) / 3);
 
+        // Filtres
+        $colors = $request->get('color', []);
+
         if ($page > $maxPages || $page < 1) { // 404 si on dépasse le nombre de pages max
             throw $this->createNotFoundException();
         }
 
         return $this->render('product/list.html.twig', [
-            'products' => $productRepository->findAllWithPagination($page),
+            'products' => $productRepository->findAllWithPagination($page, $colors),
             'max_pages' => $maxPages,
             'current_page' => $page,
             'categories' => $categoryRepository->findAll(),

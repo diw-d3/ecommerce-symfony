@@ -78,7 +78,7 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findAllWithPagination($page)
+    public function findAllWithPagination($page, $colors)
     {
         $qb = $this->createQueryBuilder('p')
             ->innerJoin('p.category', 'c')
@@ -87,6 +87,13 @@ class ProductRepository extends ServiceEntityRepository
             ->orderBy('p.id', 'ASC')
             ->setFirstResult(($page - 1) * 3) // LIMIT 0, 3
             ->setMaxResults(3);
+
+        if (!empty($colors)) {
+            foreach ($colors as $key => $color) {
+                $qb->andWhere('p.colors LIKE :color'.$key)
+                   ->setParameter('color'.$key, '%'.ucfirst($color).'%');
+            }
+        }
 
         return new Paginator($qb);
     }

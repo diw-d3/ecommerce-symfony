@@ -35,24 +35,15 @@
                     <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-list"></i> Filtres</div>
                     <form action="" method="get">
                         <ul class="list-group">
-                            <li class="list-group-item">
-                                <div class="form-check">
-                                    <input type="checkbox" name="color[]" value="bleu" class="form-check-input" id="color-bleu"">
-                                    <label class="form-check-label" for="color-bleu">Bleu</label>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="form-check">
-                                    <input type="checkbox" name="color[]" value="rouge" class="form-check-input" id="color-red">
-                                    <label class="form-check-label" for="color-red">Rouge</label>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="form-check">
-                                    <input type="checkbox" name="color[]" value="vert" class="form-check-input" id="color-vert">
-                                    <label class="form-check-label" for="color-vert">Vert</label>
-                                </div>
-                            </li>
+                            {% set colors = ['bleu', 'rouge', 'vert'] %}
+                            {% for color in colors %}
+                                <li class="list-group-item">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="color[]" value="{{ color }}" class="form-check-input" id="color-{{ color }}">
+                                        <label class="form-check-label" for="color-{{ color }}">{{ color | capitalize }}</label>
+                                    </div>
+                                </li>
+                            {% endfor %}
                             <li class="list-group-item">
                                 <button class="btn btn-primary btn-block">Filtrer</button>
                             </li>
