@@ -95,7 +95,7 @@
                                             <p class="btn btn-danger btn-block">{{ ((product.price - product.price * product.discount / 100) / 100) | number_format(2, ',', '') }} &euro;</p>
                                         </div>
                                         <div class="col">
-                                            <a href="#" class="btn btn-success btn-block">Ajouter au panier</a>
+                                            <a href="{{ path('cart_add', {id: product.id}) }}" class="btn btn-success btn-block">Ajouter au panier</a>
                                         </div>
                                     </div>
                                 </div>
