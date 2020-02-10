@@ -79,7 +79,7 @@
                                                 <p class="btn btn-danger btn-block">{{ ((last_product.price - last_product.price * last_product.discount / 100) / 100) | number_format(2, ',', '') }} &euro;</p>
                                             </div>
                                             <div class="col">
-                                                <a href="#" class="btn btn-success btn-block">Ajouter au panier</a>
+                                                <a href="{{ path('cart_add', {id: last_product.id}) }}" class="btn btn-success btn-block">Ajouter au panier</a>
                                             </div>
                                         </div>
                                     </div>
@@ -114,7 +114,7 @@
                                                     <p class="btn btn-danger btn-block">{{ ((best_product.price - best_product.price * best_product.discount / 100) / 100) | number_format(2, ',', '') }} &euro;</p>
                                                 </div>
                                                 <div class="col">
-                                                    <a href="#" class="btn btn-success btn-block">Ajouter au panier</a>
+                                                    <a href="{{ path('cart_add', {id: best_product.id}) }}" class="btn btn-success btn-block">Ajouter au panier</a>
                                                 </div>
                                             </div>
                                         </div>

@@ -64,7 +64,7 @@
                                             <i class="fa fa-minus"></i>
                                         </button>
                                     </div>
-                                    <input type="text" class="form-control"  id="quantity" name="quantity" min="1" max="100" value="1">
+                                    <input type="text" class="form-control" id="quantity" name="quantity" min="1" max="100" value="1">
                                     <div class="input-group-append">
                                         <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="">
                                             <i class="fa fa-plus"></i>
@@ -72,7 +72,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="cart.html" class="btn btn-success btn-lg btn-block text-uppercase">
+                            <a href="{{ path('cart_add', {id: product.id}) }}" class="btn btn-success btn-lg btn-block text-uppercase">
                                 <i class="fa fa-shopping-cart"></i> Ajouter au panier
                             </a>
                         </form>
