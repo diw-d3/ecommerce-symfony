@@ -59,6 +59,8 @@ class ProductRepository extends ServiceEntityRepository
 
         $qb = $query->getQuery();
 
+        // echo $qb->getSQL(); // Renvoie la requête SQL "brut"
+
         if ($number > 1) {
             return $qb->getResult();
         }
