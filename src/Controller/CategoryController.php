@@ -20,15 +20,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/category/{slug}", name="category_show")
+     * @Route("/category/{slug}/{page}", name="category_show")
      */
-    public function show(Category $category, CategoryRepository $categoryRepository, ProductRepository $productRepository)
+    public function show($page = 1, Category $category, CategoryRepository $categoryRepository, ProductRepository $productRepository)
     {
+        $products = $productRepository->fingPaginator($page, $category);
+        $maxPage = ceil(count($products) / 3);
+
         return $this->render('product/list.html.twig', [
-            'products' => $category->getProducts(),
+            'products' => $products,
             'categories' => $categoryRepository->findAll(),
             'current_category' => $category,
             'last_product' => $productRepository->findLastProducts(1, $category),
+            'current_page' => $page,
+            'max_page' => $maxPage,
         ]);
     }
 }

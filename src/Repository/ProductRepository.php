@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * @method Product|null find($id, $lockMode = null, $lockVersion = null)
@@ -52,7 +53,7 @@ class ProductRepository extends ServiceEntityRepository
             ->orderBy('p.createdAt', 'DESC');
 
         if (null !== $category) {
-            $query->andWhere('p.category= :category')
+            $query->andWhere('p.category = :category')
                 ->setParameter('category', $category);
         }
 
@@ -75,6 +76,21 @@ class ProductRepository extends ServiceEntityRepository
             ->setMaxResults(4)
             ->getQuery()
             ->getResult();
+    }
+
+    public function fingPaginator($page, $category = null)
+    {
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->orderBy('p.id')
+            ->setFirstResult(($page - 1) * 3)
+            ->setMaxResults(3);
+
+        if (null !== $category) {
+            $queryBuilder->andWhere('p.category = :category')
+                ->setParameter('category', $category);
+        }
+
+        return new Paginator($queryBuilder->getQuery());
     }
 
     // /**
